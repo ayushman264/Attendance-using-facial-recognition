@@ -21,6 +21,14 @@ for i = 1 : Train_Number
     temp = ( norm( Projected_TestImage - q ) )^2;
     Euc_dist = [Euc_dist temp];
 end
+%disp (Euc_dist);
 
 [Euc_dist_min , Recognized_index] = min(Euc_dist);
-OutputName = strcat(int2str(Recognized_index),'.jpg');
+
+disp( Euc_dist(Recognized_index) );
+
+if( Euc_dist(Recognized_index) < 2.57e+15 )
+	OutputName = strcat(int2str(Recognized_index),'.jpg');
+else
+	OutputName = 'blank';
+end

@@ -2,8 +2,8 @@ clear all
 close all
 clc
 
-Training_Path = 'C:\Program Files\MATLAB\MATLAB Production Server\R2015a\bin\MAJORc\TrainDatabase';  %Set your directory for training data file
-Testing_Path = 'C:\Program Files\MATLAB\MATLAB Production Server\R2015a\bin\MAJOR\TestDatabase';    %Set your directory for testing data file
+Training_Path = 'C:\Program Files\MATLAB\MATLAB Production Server\R2015a\bin\MAJORd\TrainDatabase';  %Set your directory for training data file
+Testing_Path = 'C:\Program Files\MATLAB\MATLAB Production Server\R2015a\bin\MAJORd\TestDatabase';    %Set your directory for testing data file
 
 flag=1
 
@@ -13,7 +13,7 @@ while (1==1)
                 'Input Image From File',...
                 'Exit');
     if (choice==1)
-        try cd ('C:\Program Files\MATLAB\MATLAB Production Server\R2015a\bin\MAJORc');close all; end;
+        try cd ('C:\Program Files\MATLAB\MATLAB Production Server\R2015a\bin\MAJORd');close all; end;
         capturenow;
     end
     if (choice==2)
@@ -24,7 +24,13 @@ while (1==1)
         Training_Data = ReadFace(Training_Path);
         [m, A, Eigenfaces] = EigenfaceCore(Training_Data);
         OutputName = Recognition(TestImage, m, A, Eigenfaces);
-        SelectedImage = strcat(Training_Path,'\',OutputName);
+        
+		if( strcmp(OutputName,'blank'))
+			disp('No Match Found');
+			continue;
+		end	
+		
+		SelectedImage = strcat(Training_Path,'\',OutputName);
         SelectedImage = imread(SelectedImage);
         figure('name','Recognition Result')
         subplot(1,2,1);
